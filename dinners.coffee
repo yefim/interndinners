@@ -1,6 +1,22 @@
-Dinners = new Meteor.Collection("dinners")
+Applications = new Meteor.Collection("applications")
+Dinner = new Meteor.Collection("dinners")
 
 if Meteor.isClient
+  $.fn.serializeObject = ->
+    ob = {}
+    @serializeArray().forEach (field) ->
+      ob[field.name] = field.value
+    return ob
+
+  get_dinner = ->
+    console.log "here"
+    console.log @params.name
+    dinner = Dinner.findOne(name: @params.name) or {}
+    Session.set("dinner", dinner)
+
+  Meteor.pages
+    '/dinner/:name' : {to: 'dinner', as: 'dinner', before: get_dinner}
+
   Template.dinner.full_name = ->
     first = Meteor.user()?.services.linkedin.firstName
     last = Meteor.user()?.services.linkedin.lastName
@@ -8,10 +24,13 @@ if Meteor.isClient
   Template.dinner.school = -> Meteor.user()?.services.linkedin.educations.values[0].schoolName
   Template.dinner.grad_year = -> Meteor.user()?.services.linkedin.educations.values[0].endDate.year
   Template.dinner.headline = -> Meteor.user()?.services.linkedin.headline
+  Template.dinner.dinner = -> Session.get("dinner")
 
 
-  # fill in if linkedin doesnt have
-
-  Template.dinner.events "click input": ->
-    # template data, if any, is available in 'this'
-    console.log "You pressed the button"
+  Template.dinner.events
+    "submit": ->
+      application = $('form').serializeObject()
+      return false if not application.email
+      # add in which dinner being applied to
+      Applications.insert(application) unless Applications.findOne(email: application.email)
+      return false

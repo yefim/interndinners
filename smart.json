@@ -1,0 +1,8 @@
+{
+  "meteor": {
+    "git": "https://github.com/yefim/accounts-linkedin.git"
+  },
+  "packages": {
+    "mini-pages": {}
+  }
+}
