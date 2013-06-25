@@ -1,0 +1,75 @@
+<head>
+  <title>dinners</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+  <div class='container'>
+    <div class='row'>
+      <div class='span12'>
+        {{> dinner}}
+      </div>
+    </div>
+  </div>
+</body>
+
+<template name="dinner">
+  <div class='row'>
+    <div class='span6 offset3'>
+      {{loginButtons}}
+      <form class='form-horizontal'>
+        <div class='control-group'>
+          <label class='control-label' for='name'>Name</label>
+          <div class='controls'>
+            <input type='text' id='name' placeholder='Name' value="{{ full_name }}">
+          </div>
+        </div>
+        <div class='control-group'>
+          <label class='control-label' for='email'>Email</label>
+          <div class='controls'>
+            <input type='email' id='email' placeholder='Email' value="{{ email }}">
+          </div>
+        </div>
+        <div class='control-group'>
+          <label class='control-label' for='school'>School</label>
+          <div class='controls'>
+            <input type='text' id='school' placeholder='School' value="{{ school }}">
+          </div>
+        </div>
+        <div class='control-group'>
+          <label class='control-label' for='grad-year'>Graduation year</label>
+          <div class='controls'>
+            <input type='number' min='2013' id='grad-year' placeholder='Graduation year' value="{{ grad_year }}">
+          </div>
+        </div>
+        <div class='control-group'>
+          <label class='control-label' for='gig'>Current gig</label>
+          <div class='controls'>
+            <input type='text' id='gig' placeholder='Current gig' value='{{ headline }}'>
+          </div>
+        </div>
+        <div class='control-group'>
+          <label class='control-label' for='github'>GitHub link</label>
+          <div class='controls'>
+            <input type='url' placeholder='GitHub link' id='github'>
+          </div>
+        </div>
+        <div class='control-group'>
+          <label class='control-label' for='busy'>What keeps you busy?</label>
+          <div class='controls'>
+            <textarea id='busy' rows='3' placeholder="Any clubs, projects, or organizations you're involved in"></textarea>
+          </div>
+        </div>
+        <div class='control-group'>
+          <label class='control-label' for='question'>What is a question you'd like to ask the host?</label>
+          <div class='controls'>
+            <textarea id='busy' rows='3'></textarea>
+          </div>
+        </div>
+        <div class="form-actions">
+          <input type="submit" value='Submit' class="btn btn-primary">
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
