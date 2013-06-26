@@ -9,8 +9,6 @@ if Meteor.isClient
     return ob
 
   get_dinner = ->
-    console.log "here"
-    console.log @params.name
     dinner = Dinner.findOne(name: @params.name) or {}
     Session.set("dinner", dinner)
 
@@ -30,6 +28,7 @@ if Meteor.isClient
   Template.dinner.events
     "submit": ->
       application = $('form').serializeObject()
+      application.applying_user_id = Meteor.userId()
       return false if not application.email
       # add in which dinner being applied to
       Applications.insert(application) unless Applications.findOne(email: application.email)
