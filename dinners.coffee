@@ -32,7 +32,10 @@ if Meteor.isClient
     "submit": ->
       application = $('form').serializeObject()
       return false if not application.email
-      # add in which dinner being applied to
+    
+      application.applying_user_id = Meteor.userId()
+      application.dinner_title = Session.get('dinner')
+      
       Applications.insert(application) unless Applications.findOne(email: application.email)
       Session.set("submitted", true)
       return false
