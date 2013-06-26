@@ -36,8 +36,15 @@
       </div>
     </div>
     <div class='span6'>
-      {{loginButtons}}
+      <h3>Join {{ dinner.name }} for dinner!</h3>
       <form class='form-horizontal'>
+        <div class='control-group'>
+          <div class='controls'>
+            {{#unless currentUser}}
+              <a class='btn' href='#' id='login'>Apply through LinkedIn</a>
+            {{/unless}}
+          </div>
+        </div>
         <div class='control-group'>
           <label class='control-label' for='name'>Name</label>
           <div class='controls'>
@@ -71,7 +78,7 @@
         <div class='control-group'>
           <label class='control-label' for='github'>GitHub username</label>
           <div class='controls'>
-            <input type='url' name='github' placeholder='GitHub username' id='github'>
+            <input type='text' name='github' placeholder='GitHub username' id='github'>
           </div>
         </div>
         <div class='control-group'>
@@ -86,8 +93,10 @@
             <textarea id='busy' rows='3' name='question'></textarea>
           </div>
         </div>
-        <div class="form-actions">
-          <input type="submit" value='Submit' class="btn btn-primary">
+        <div class="control-group">
+          <div class='controls'>
+            <input type="submit" value='Submit' class="btn btn-primary btn-large">
+          </div>
         </div>
       </form>
     </div>

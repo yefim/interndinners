@@ -17,5 +17,6 @@ Meteor.publish "userData", ->
   )
 
 Meteor.methods
-  has_applied_to: (email, dinner_title) ->
-    Applications.findOne {email, dinner_title}
+  submit_application: (application) ->
+    unless Applications.findOne {email: application.email, dinner_title: application.dinner_title}
+      Applications.insert(application)

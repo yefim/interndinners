@@ -26,17 +26,34 @@ if Meteor.isClient
   Template.dinner.known_for_joined = -> Session.get("dinner")?.known_for?.join(" | ")
   Template.dinner.submitted = -> Session.get("submitted")
 
+  Template.dinner.rendered = ->
+    if !window._gaq?
+      window._gaq = []
+      _gaq.push(['_setAccount', 'UA-39356319-1'])
+      _gaq.push(['_trackPageview'])
+      (->
+        ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true
+        gajs = '.google-analytics.com/ga.js'
+        ga.src = if 'https:' is document.location.protocol then 'https://ssl'+gajs else 'http://www'+gajs
+        s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s)
+      )()
+
 
   Template.dinner.events
+    "click #login": (e) ->
+      e.preventDefault()
+      Meteor.loginWithLinkedin()
     "submit": ->
       application = $('form').serializeObject()
       return false if not application.email
 
       application.applying_user_id = Meteor.userId()
-      application.dinner_title = Session.get('dinner')
+      application.dinner_title = Session.get('dinner').id
 
       Session.set("submitted", true)
-      Applications.insert(application) unless Meteor.call(
-        'has_applied_to', application.email, application.dinner_title)
+      Meteor.call('submit_application', application)
+
+      alert "Thanks for applying. We'll let you know as soon as we can. Be on the lookout for an email."
+      window.location = "http://theinternproject.com/"
 
       return false
