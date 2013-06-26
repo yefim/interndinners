@@ -1,5 +1,7 @@
+root = exports ? this
+
 Applications = new Meteor.Collection("applications")
-Dinner = new Meteor.Collection("dinners")
+root.Dinners = new Meteor.Collection("dinners")
 
 if Meteor.isClient
   $.fn.serializeObject = ->
@@ -9,9 +11,7 @@ if Meteor.isClient
     return ob
 
   get_dinner = ->
-    console.log "here"
-    console.log @params.name
-    dinner = Dinner.findOne(name: @params.name) or {}
+    dinner = Dinners.findOne(id: @params.name) or {}
     Session.set("dinner", dinner)
 
   Meteor.pages
@@ -25,6 +25,7 @@ if Meteor.isClient
   Template.dinner.grad_year = -> Meteor.user()?.services.linkedin.educations.values[0].endDate.year
   Template.dinner.headline = -> Meteor.user()?.services.linkedin.headline
   Template.dinner.dinner = -> Session.get("dinner")
+  Template.dinner.submitted = -> Session.get("submitted")
 
 
   Template.dinner.events
@@ -33,4 +34,5 @@ if Meteor.isClient
       return false if not application.email
       # add in which dinner being applied to
       Applications.insert(application) unless Applications.findOne(email: application.email)
+      Session.set("submitted", true)
       return false

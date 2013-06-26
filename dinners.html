@@ -18,8 +18,15 @@
 </template>
 
 <template name="dinner">
+  <!--{{ page.dinner.speaker_name }}-->
   <div class='row'>
-    <div class='span6 offset3'>
+    <div class='span6'>
+      <div class='well'>
+        <h1>{{ dinner.name }} <small>({{ dinner.headline }})</small></h1>
+        {{{ dinner.bio }}}
+      </div>
+    </div>
+    <div class='span6'>
       {{loginButtons}}
       <form class='form-horizontal'>
         <div class='control-group'>
