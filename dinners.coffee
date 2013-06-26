@@ -1,9 +1,6 @@
-root = exports ? this
-
-Applications = new Meteor.Collection("applications")
-root.Dinners = new Meteor.Collection("dinners")
-
 if Meteor.isClient
+  Meteor.subscribe("dinners")
+
   $.fn.serializeObject = ->
     ob = {}
     @serializeArray().forEach (field) ->
@@ -18,14 +15,14 @@ if Meteor.isClient
     '/dinner/:name' : {to: 'dinner', as: 'dinner', before: get_dinner}
 
   Template.dinner.full_name = ->
-    first = Meteor.user()?.services.linkedin.firstName
-    last = Meteor.user()?.services.linkedin.lastName
+    first = Meteor.user()?.services?.linkedin.firstName
+    last = Meteor.user()?.services?.linkedin.lastName
     return first + " " + last if first and last
-  Template.dinner.school = -> Meteor.user()?.services.linkedin.educations.values[0].schoolName
-  Template.dinner.grad_year = -> Meteor.user()?.services.linkedin.educations.values[0].endDate.year
-  Template.dinner.headline = -> Meteor.user()?.services.linkedin.headline
+  Template.dinner.school = -> Meteor.user()?.services?.linkedin.educations.values[0].schoolName
+  Template.dinner.grad_year = -> Meteor.user()?.services?.linkedin.educations.values[0].endDate.year
+  Template.dinner.headline = -> Meteor.user()?.services?.linkedin.headline
   Template.dinner.dinner = -> Session.get("dinner")
-  Template.dinner.known_for_joined = -> Session.get("dinner").known_for.join(" | ")
+  Template.dinner.known_for_joined = -> Session.get("dinner")?.known_for?.join(" | ")
   Template.dinner.submitted = -> Session.get("submitted")
 
 

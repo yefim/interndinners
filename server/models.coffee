@@ -8,7 +8,7 @@ Applications.allow
   update: -> false
   remove: -> false
 
-Meteor.publish 'dinners' -> Dinners.find()
+Meteor.publish 'dinners', -> Dinners.find()
 
 Meteor.methods
   has_applied_to: (email, dinner_title) ->
