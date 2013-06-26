@@ -25,6 +25,7 @@ if Meteor.isClient
   Template.dinner.grad_year = -> Meteor.user()?.services.linkedin.educations.values[0].endDate.year
   Template.dinner.headline = -> Meteor.user()?.services.linkedin.headline
   Template.dinner.dinner = -> Session.get("dinner")
+  Template.dinner.known_for_joined = -> Session.get("dinner").known_for.join(" | ")
   Template.dinner.submitted = -> Session.get("submitted")
 
 
