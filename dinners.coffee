@@ -1,5 +1,6 @@
 if Meteor.isClient
   Meteor.subscribe("dinners")
+  Meteor.subscribe("userData")
 
   $.fn.serializeObject = ->
     ob = {}

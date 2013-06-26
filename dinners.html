@@ -22,10 +22,17 @@
   <div class='row'>
     <div class='span6'>
       <div class='well'>
+        <img src="{{ dinner.photo }}" class='pull-right pic'>
         <h1>{{ dinner.name }}</h1>
         <h3>{{ dinner.headline }}</h3>
         <h4>{{ known_for_joined }}</h4>
         {{{ dinner.bio }}}
+        <img src='{{ dinner.company_photo }}' class='pull-right pic'>
+        <h3>{{ dinner.company }}</h3>
+        {{ dinner.company_bio }}
+        <h3>Dinner Info</h3>
+        <h5>Date: {{ dinner.date }}</h5>
+        <h5>Place: {{ dinner.location }}</h5>
       </div>
     </div>
     <div class='span6'>
@@ -58,13 +65,13 @@
         <div class='control-group'>
           <label class='control-label' for='gig'>Current gig</label>
           <div class='controls'>
-            <input type='text' id='gig' name='gig' placeholder='Current gig' value='{{ headline }}'>
+            <input type='text' id='gig' name='gig' placeholder='Intern at Google' value='{{ headline }}'>
           </div>
         </div>
         <div class='control-group'>
-          <label class='control-label' for='github'>GitHub link</label>
+          <label class='control-label' for='github'>GitHub username</label>
           <div class='controls'>
-            <input type='url' name='github' placeholder='GitHub link' id='github'>
+            <input type='url' name='github' placeholder='GitHub username' id='github'>
           </div>
         </div>
         <div class='control-group'>
