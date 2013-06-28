@@ -8,12 +8,17 @@ if Meteor.isClient
       ob[field.name] = field.value
     return ob
 
-  get_dinner = ->
+  show_all_dinners = ->
+    dinners = Dinners.find().fetch() or []
+    @set("dinners", dinners)
+
+  show_dinner = ->
     dinner = Dinners.findOne(id: @params.name) or {}
     Session.set("dinner", dinner)
 
   Meteor.pages
-    '/dinner/:name' : {to: 'dinner', as: 'dinner', before: get_dinner}
+    '/dinner/:name' : {to: 'dinner', as: 'dinner', before: show_dinner}
+    '/dinners'      : {to: 'dinners', as: 'dinners', before: show_all_dinners}
 
   Template.dinner.full_name = ->
     first = Meteor.user()?.services?.linkedin.firstName

@@ -17,6 +17,27 @@
   </div>
 </template>
 
+<template name='dinners'>
+  {{#each page.dinners}}
+  <div class='row'>
+    <div class='span12'>
+      <div class='well'>
+        <img src="{{ photo }}" class='pull-right pic'>
+        <h1>{{ name }}</h1>
+        <h3>{{ headline }}</h3>
+        {{{ bio }}}
+        <h3>{{ company }}</h3>
+        {{ company_bio }}
+        <h3>Dinner Info</h3>
+        <h5>Date: {{ date }}</h5>
+        <h5>Place: {{ location }}</h5>
+        <a class='btn btn-primary' href='/dinner/{{ id }}'>Apply for dinner with {{ name }}!</a>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</template>
+
 <template name="dinner">
   <!--{{ page.dinner.speaker_name }}-->
   <div class='row'>
