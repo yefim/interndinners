@@ -9,7 +9,7 @@ if Meteor.isClient
     return ob
 
   show_all_dinners = ->
-    dinners = Dinners.find({visible: {$in: ["true", true]}})
+    dinners = Dinners.find()
     @set("dinners", dinners)
 
   show_dinner = ->
