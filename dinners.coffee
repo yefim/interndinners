@@ -9,7 +9,7 @@ if Meteor.isClient
     return ob
 
   show_all_dinners = ->
-    dinners = Dinners.find()
+    dinners = Dinners.find().fetch()
     @set("dinners", dinners)
 
   show_dinner = ->
