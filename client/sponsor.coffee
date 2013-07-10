@@ -12,19 +12,19 @@ Template.sponsor.events
     Meteor.loginWithPassword creds.email, creds.password, (err) ->
       if err
         Accounts.createUser creds, (err) ->
-          console.log err
+          alert err.reason
 
   'click #login': (e) ->
     creds = get_form e
     Meteor.loginWithPassword creds.email, creds.password, (err) ->
       if err
-        console.log err
+        alert err.reason
 
   'click #register': (e) ->
     creds = get_form e
     Accounts.createUser creds, (err) ->
       if err
-        console.log err
+        alert err.reason
 
 Template.sponsor_form.events
   'submit #sponsor-form': (e) ->
