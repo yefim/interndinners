@@ -6,6 +6,7 @@
     "mini-pages": {},
     "spin": {},
     "router": {},
-    "z-mongo-admin": {}
+    "z-mongo-admin": {},
+    "handlebars-server": {}
   }
 }
