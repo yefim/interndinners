@@ -25,11 +25,17 @@ show_dinner = ->
   dinner = Dinners.findOne(id: @params.name) or {}
   Session.set("dinner", dinner)
 
+admin_dashboard = ->
+  @set("host_ids", (Dinners.find({state: 'APPROVED'}).map (host) -> host.id).join(","))
+  # after merge (state: DINNER_STATE.APPROVED)
+  @set("is_admin", Meteor.user()?.profile?.admin)
+
 Meteor.pages
   '/sponsor'                  : {to: 'sponsor', as: 'sponsor'}
   '/dinner/:name/applicants'  : {to: 'applicants', as: 'applicants', before: show_applicants}
   '/dinner/:name'             : {to: 'dinner', as: 'dinner', before: show_dinner}
   '/dinners'                  : {to: 'dinners', as: 'dinners', before: show_all_dinners}
+  '/admin-dashboard'          : {to: 'admin-dashboard', as: 'admin-dashboard', before: admin_dashboard}
 
 Template.dinner.full_name = ->
   first = Meteor.user()?.services?.linkedin.firstName
