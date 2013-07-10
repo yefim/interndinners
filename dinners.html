@@ -17,6 +17,122 @@
   </div>
 </template>
 
+<template name='sponsor'>
+{{#if currentUser}}
+  {{> sponsor_form}}
+{{else}}
+<form id='login-form' class='form-horizontal'>
+  <div class='control-group'>
+    <label class='control-label' for='email'>Email</label>
+    <div class='controls'>
+      <input name='email' type='email' placeholder='Email'>
+    </div>
+  </div>
+  <div class='control-group'>
+    <label for='password' class='control-label'>Password</label>
+    <div class='controls'>
+      <input name='password' type='password' placeholder='Password'>
+    </div>
+  </div>
+  <div class='control-group'>
+    <div class='controls'>
+      <input class='btn-primary btn' type='submit' value='Log in' id='login'>
+      <input class='btn' type='submit' value='Register' id='register'>
+    </div>
+  </div>
+</form>
+{{/if}}
+</template>
+
+<template name='sponsor_form'>
+<form id='sponsor-form' class='form-horizontal'>
+  <div class='control-group'>
+    <label class='control-label'>Company Name</label>
+    <div class='controls'>
+      <input name='company' type='text' placeholder='Company Name'>
+    </div>
+  </div>
+  <div class='control-group'>
+    <label class='control-label'>Company Logo URL</label>
+    <div class='controls'>
+      <input name='company_photo' type='text' placeholder='Company Logo URL'>
+    </div>
+  </div>
+  <div class='control-group'>
+    <label class='control-label'>Company Blurb</label>
+    <div class='controls'>
+      <textarea name='company_bio' placeholder='Company Blurb' rows=3></textarea>
+    </div>
+  </div>
+  <div class='control-group'>
+    <label class='control-label'>Speaker Name</label>
+    <div class='controls'>
+      <input name='name' type='text' placeholder='Speaker Name'>
+    </div>
+  </div>
+  <div class='control-group'>
+    <label class='control-label'>Speaker's Title at Company</label>
+    <div class='controls'>
+      <input name='headline' type='text' placeholder="Speaker's Title at Company">
+    </div>
+  </div>
+  <div class='control-group'>
+    <label class='control-label'>Speaker Photo URL</label>
+    <div class='controls'>
+      <input name='photo' type='text' placeholder="Speaker Photo URL">
+    </div>
+  </div>
+  <div class='control-group'>
+    <label class='control-label'>Speaker Bio</label>
+    <div class='controls'>
+      <textarea name='bio' placeholder="Speaker Bio"></textarea>
+    </div>
+  </div>
+  <div class='control-group'>
+    <label class='control-label'>Date of Dinner</label>
+    <div class='controls'>
+      <input name='date' type='date' placeholder="YYYY-MM-DD">
+    </div>
+  </div>
+  <div class='control-group'>
+    <label class='control-label'>Time of Dinner</label>
+    <div class='controls'>
+      <input name='time' type='time' placeholder="HH:MM">
+    </div>
+  </div>
+  <div class='control-group'>
+    <label class='control-label'>Location of Dinner</label>
+    <div class='controls'>
+      <input name='location' type='text' placeholder="Location of Dinner">
+    </div>
+  </div>
+  <div class='control-group'>
+    <div class='controls'>
+      <input type='submit' class='btn' value='Submit dinner'>
+    </div>
+  </div>
+</form>
+</template>
+
+<template name='applicants'>
+{{#if page.rejected}}
+  <h1>Your application has been... REJECTED!</h1>
+{{else}}
+  {{#if page.applied}}
+    <h1>Your application is being reviewed. Please email yefim323@gmail.com if you do not receive word of it within a week.</h1>
+  {{else}}
+    {{#each page.applicants }}
+      <div class='applicant well'>
+        <h1>{{ name }}</h1>
+        <h2>{{ email }}</h2>
+      </div>
+    {{else}}
+    You do not yet have applicants because you're a bitch.
+    {{/each}}
+  {{/if}}
+{{/if}}
+</template>
+
 <template name='dinners'>
   {{#each page.dinners}}
   <div class='row'>

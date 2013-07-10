@@ -7,6 +7,16 @@ $.fn.serializeObject = ->
     ob[field.name] = field.value
   return ob
 
+show_applicants = ->
+  dinner = Dinners.findOne(id: @params.name)
+  applicants = Applications.find(dinner_title: @params.name).fetch()
+  @set("dinner", dinner)
+  @set("applied", dinner?.state == STATE.APPLIED)
+  @set("rejected", dinner?.state == STATE.REJECTED)
+  @set("approved", dinner?.state == STATE.APPROVED)
+  @set("published", dinner?.state == STATE.PUBLISHED)
+  @set("applicants", applicants)
+
 show_all_dinners = ->
   dinners = Dinners.find().fetch()
   @set("dinners", dinners)
@@ -16,8 +26,10 @@ show_dinner = ->
   Session.set("dinner", dinner)
 
 Meteor.pages
-  '/dinner/:name' : {to: 'dinner', as: 'dinner', before: show_dinner}
-  '/dinners'      : {to: 'dinners', as: 'dinners', before: show_all_dinners}
+  '/sponsor'                  : {to: 'sponsor', as: 'sponsor'}
+  '/dinner/:name/applicants'  : {to: 'applicants', as: 'applicants', before: show_applicants}
+  '/dinner/:name'             : {to: 'dinner', as: 'dinner', before: show_dinner}
+  '/dinners'                  : {to: 'dinners', as: 'dinners', before: show_all_dinners}
 
 Template.dinner.full_name = ->
   first = Meteor.user()?.services?.linkedin.firstName

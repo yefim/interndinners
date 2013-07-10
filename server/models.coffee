@@ -1,5 +1,5 @@
 Dinners.allow
-  insert: -> false
+  insert: -> true
   update: -> false
   remove: -> false
 
@@ -15,6 +15,10 @@ Meteor.publish "userData", ->
     {_id: @userId},
     {fields: {'services': 1}}
   )
+
+Meteor.publish 'applications', ->
+  dinners = Dinners.find(created_by: @userid).fetch()
+  Applications.find(dinner_title: {$in: dinners.map (d) -> d.id})
 
 Meteor.methods
   submit_application: (application) ->
