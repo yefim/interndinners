@@ -61,6 +61,28 @@ Template.dinner.rendered = ->
     )()
 
 
+Template.admin_dashboard.events
+  "submit": (e) ->
+    e.preventDefault()
+    mailing_form = $('form').serializeObject()
+    dinner_ids = mailing_form['dinners-to-send']
+    return alert "not sending to anybody" unless dinner_ids
+
+    dinners = Dinners.find {id: {$in: dinner_ids.split(",")}}
+    unless dinners.count() is dinner_ids.split(",").length
+      return alert "couldn't find some of your dinners"
+
+    Meteor.call('announce_dinners',
+      subject: mailing_form.subject
+      header_title: mailing_form.header
+      header_description: mailing_form.description
+      dinner_ids: dinner_ids
+    )
+
+    alert "Great, email prepared. Log in to mailchimp and finalize there"
+    return false
+
+
 Template.dinner.events
   "click #login": (e) ->
     e.preventDefault()
