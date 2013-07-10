@@ -18,7 +18,7 @@ Meteor.publish "userData", ->
 
 Meteor.publish 'applications', ->
   dinners = Dinners.find(created_by: @userid).fetch()
-  Applications.find(dinner_title: {$in: dinners.map (d) -> d.id})
+  Applications.find(dinner_title: {$in: _.pluck dinners, 'id'})
 
 Meteor.methods
   submit_application: (application) ->
