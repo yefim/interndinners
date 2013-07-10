@@ -21,26 +21,33 @@
 {{#if currentUser}}
   {{> sponsor_form}}
 {{else}}
-<form id='login-form' class='form-horizontal'>
-  <div class='control-group'>
-    <label class='control-label' for='email'>Email</label>
-    <div class='controls'>
-      <input name='email' type='email' placeholder='Email'>
-    </div>
+<div class='row'>
+  <div class='span4 description'>
+    <p>Please log in/register in order to apply for dinner sponsorship as well as keep track of the applicants to your dinner.</p>
   </div>
-  <div class='control-group'>
-    <label for='password' class='control-label'>Password</label>
-    <div class='controls'>
-      <input name='password' type='password' placeholder='Password'>
-    </div>
+  <div class='span8'>
+    <form id='login-form' class='form-horizontal'>
+      <div class='control-group'>
+        <label class='control-label' for='email'>Email</label>
+        <div class='controls'>
+          <input name='email' type='email' placeholder='Email'>
+        </div>
+      </div>
+      <div class='control-group'>
+        <label for='password' class='control-label'>Password</label>
+        <div class='controls'>
+          <input name='password' type='password' placeholder='Password'>
+        </div>
+      </div>
+      <div class='control-group'>
+        <div class='controls'>
+          <input class='btn-primary btn' type='submit' value='Log in' id='login'>
+          <input class='btn' type='submit' value='Register' id='register'>
+        </div>
+      </div>
+    </form>
   </div>
-  <div class='control-group'>
-    <div class='controls'>
-      <input class='btn-primary btn' type='submit' value='Log in' id='login'>
-      <input class='btn' type='submit' value='Register' id='register'>
-    </div>
-  </div>
-</form>
+</div>
 {{/if}}
 </template>
 
