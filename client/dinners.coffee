@@ -17,8 +17,11 @@ show_applicants = ->
   @set("published", dinner?.state == STATE.PUBLISHED)
   @set("applicants", applicants)
 
-show_all_dinners = ->
-  dinners = Dinners.find().fetch()
+show_public_dinners = ->
+  # TODO filter out dinners that have already happened
+  dinners = Dinners.find(
+    state: {$in: [STATE.APPROVED, STATE.PUBLISHED]}
+  ).fetch()
   @set("dinners", dinners)
 
 show_dinner = ->
@@ -34,7 +37,7 @@ Meteor.pages
   '/sponsor'                  : {to: 'sponsor', as: 'sponsor'}
   '/dinner/:name/applicants'  : {to: 'applicants', as: 'applicants', before: show_applicants}
   '/dinner/:name'             : {to: 'dinner', as: 'dinner', before: show_dinner}
-  '/dinners'                  : {to: 'dinners', as: 'dinners', before: show_all_dinners}
+  '/dinners'                  : {to: 'dinners', as: 'dinners', before: show_public_dinners}
   '/admin-dashboard'          : {to: 'admin-dashboard', as: 'admin-dashboard', before: admin_dashboard}
 
 Template.dinner.full_name = ->
