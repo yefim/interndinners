@@ -29,8 +29,7 @@ show_dinner = ->
   Session.set("dinner", dinner)
 
 admin_dashboard_prep = ->
-  @set("host_ids", (Dinners.find({state: 'APPROVED'}).map (host) -> host.id).join(","))
-  # after merge (state: DINNER_STATE.APPROVED)
+  @set("host_ids", (Dinners.find({state: STATE.APPROVED}).map (host) -> host.id).join(","))
   @set("is_admin", Meteor.user()?.profile?.admin)
 
 Meteor.pages
