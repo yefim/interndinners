@@ -28,7 +28,7 @@ show_dinner = ->
   dinner = Dinners.findOne(id: @params.name) or {}
   Session.set("dinner", dinner)
 
-admin_dashboard = ->
+admin_dashboard_prep = ->
   @set("host_ids", (Dinners.find({state: 'APPROVED'}).map (host) -> host.id).join(","))
   # after merge (state: DINNER_STATE.APPROVED)
   @set("is_admin", Meteor.user()?.profile?.admin)
@@ -38,7 +38,7 @@ Meteor.pages
   '/dinner/:name/applicants'  : {to: 'applicants', as: 'applicants', before: show_applicants}
   '/dinner/:name'             : {to: 'dinner', as: 'dinner', before: show_dinner}
   '/dinners'                  : {to: 'dinners', as: 'dinners', before: show_public_dinners}
-  '/admin-dashboard'          : {to: 'admin-dashboard', as: 'admin-dashboard', before: admin_dashboard}
+  '/admin-dashboard'          : {to: 'admin-dashboard', as: 'admin-dashboard', before: admin_dashboard_prep}
 
 Template.dinner.full_name = ->
   first = Meteor.user()?.services?.linkedin.firstName
@@ -64,7 +64,7 @@ Template.dinner.rendered = ->
     )()
 
 
-Template.admin_dashboard.events
+Template['admin-dashboard'].events
   "submit": (e) ->
     e.preventDefault()
     mailing_form = $('form').serializeObject()
