@@ -1,0 +1,39 @@
+<template name='admin-dashboard'>
+{{#if page.is_admin }}
+<h1> Send email announcing new dinners</h1>
+<p>This will send an email to ~2,000 people, so be careful yo!</p>
+<form class='form-horizontal'>
+  <div class='control-group'>
+    <label class='control-label' for='subject'>Subject</label>
+    <div class='controls'>
+      <input type='text' name='subject' id='subject' placeholder='Subject' value="" required />
+    </div>
+  </div>
+  <div class='control-group'>
+    <label class='control-label' for='header'>Header (in email)</label>
+    <div class='controls'>
+      <input type='text' name='header' id='header' placeholder='Bob and Sarahs dinner' value="" required />
+    </div>
+  </div>
+  <div class='control-group'>
+    <label class='control-label' for='description'>Description - goes below title but above dinner descriptions (optional)</label>
+    <div class='controls'>
+      <textarea name='description' id='description' placeholder='Bob and Sarahs dinner' value="" />
+    </div>
+  </div>
+  <div class='control-group'>
+    <label class='control-label' for='dinners-to-send'>ids for each of the dinners</label>
+    <div class='controls'>
+      <input type='text' name='dinners-to-send' id='dinners-to-send' placeholder='Bob,Sarah' value="{{page.host_ids}}" required>
+    </div>
+  </div>
+  <div class="control-group">
+    <div class='controls'>
+      <input type="submit" value='Send that shit' class="btn btn-primary btn-large">
+    </div>
+  </div>
+</form>
+{{else}}
+wat?
+{{/if}}
+</template>
