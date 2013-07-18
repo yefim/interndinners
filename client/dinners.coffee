@@ -20,7 +20,8 @@ show_applicants = ->
 show_public_dinners = ->
   # TODO filter out dinners that have already happened
   dinners = Dinners.find(
-    state: {$in: [STATE.APPROVED, STATE.PUBLISHED]}
+    {state: {$in: [STATE.APPROVED, STATE.PUBLISHED]}},
+    {sort: {_id: 1}}
   ).fetch()
   @set("dinners", dinners)
 
@@ -47,7 +48,17 @@ Template.dinner.school = -> Meteor.user()?.services?.linkedin.educations.values[
 Template.dinner.grad_year = -> Meteor.user()?.services?.linkedin.educations.values[0].endDate.year
 Template.dinner.headline = -> Meteor.user()?.services?.linkedin.headline
 Template.dinner.dinner = -> Session.get("dinner")
-Template.dinner.known_for_joined = -> Session.get("dinner")?.known_for?.join(" | ")
+Template.dinner.known_for_joined = ->
+  # array/object confusion, due to zma. dealing with it hackety hack
+  known_for = Session.get("dinner")?.known_for
+  if known_for
+    result = known_for[0]
+    x = 1
+    while known_for[x]?
+      result += " | #{known_for[x]}"
+      x++
+    result
+
 Template.dinner.submitted = -> Session.get("submitted")
 
 Template.dinner.rendered = ->
@@ -63,6 +74,8 @@ Template.dinner.rendered = ->
     )()
 
 
+Template['admin-dashboard'].helpers
+  email_html: -> Session.get('email_html')
 Template['admin-dashboard'].events
   "submit": (e) ->
     e.preventDefault()
@@ -74,12 +87,12 @@ Template['admin-dashboard'].events
     unless dinners.count() is dinner_ids.split(",").length
       return alert "couldn't find some of your dinners"
 
-    Meteor.call('announce_dinners',
+    Meteor.call('announce_dinners', {
       subject: mailing_form.subject
       header_title: mailing_form.header
       header_description: mailing_form.description
       dinner_ids: dinner_ids
-    )
+    }, (error, result) -> Session.set('email_html', result or error))
 
     alert "Great, email prepared. Log in to mailchimp and finalize there"
     return false
